@@ -8,7 +8,6 @@ app.jinja_env = config.jinja_env
 
 
 if os.environ.get('SERVER_SOFTWARE',''):
-    # print os.environ.get('SERVER_SOFTWARE','')
     view.add_views(app)
     if os.environ.get('SERVER_SOFTWARE','').startswith('Development'):
         app.debug = True

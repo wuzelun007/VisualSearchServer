@@ -2,7 +2,7 @@ import time,glob,re,sys,logging,os
 import numpy as np
 import tensorflow as tf
 from scipy import spatial
-from settings import AWS
+from settings import AWS,INDEX_PATH,CONFIG_PATH
 from tensorflow.python.platform import gfile
 from nearpy import Engine
 from nearpy.hashes import RandomBinaryProjections
@@ -22,8 +22,8 @@ BATCH_SIZE = 1000
 
 class NodeLookup(object):
     def __init__(self):
-        label_lookup_path = 'data/imagenet_2012_challenge_label_map_proto.pbtxt'
-        uid_lookup_path = 'data/imagenet_synset_to_human_label_map.txt'
+        label_lookup_path = CONFIG_PATH+'/data/imagenet_2012_challenge_label_map_proto.pbtxt'
+        uid_lookup_path = CONFIG_PATH+'/data/imagenet_synset_to_human_label_map.txt'
         self.node_lookup = self.load(label_lookup_path, uid_lookup_path)
 
     def load(self, label_lookup_path, uid_lookup_path):
@@ -58,7 +58,7 @@ class NodeLookup(object):
 
 
 def load_network(png=False):
-    with gfile.FastGFile('data/network.pb', 'rb') as f:
+    with gfile.FastGFile(CONFIG_PATH+'/data/network.pb', 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
         if png:
@@ -71,14 +71,13 @@ def load_network(png=False):
 
 def load_index():
     index,files,findex = [],{},0
-    index_path = "/mnt/index/*.npy" if AWS else "index/3*.npy"
-    for fname in glob.glob(index_path):
+    for fname in glob.glob(INDEX_PATH):
         index.append(np.load(fname))
         for i,f in enumerate(file(fname.replace(".feats_pool3.npy",".files"))):
             files[findex] = f.strip()
             ENGINE.store_vector(index[-1][i,:],"{}".format(findex))
             findex += 1
-        print fname
+        logging.info("Loaded {}".format(fname))
     index = np.concatenate(index)
     return index,files
 
@@ -87,7 +86,7 @@ def nearest(query_vector,index,files,n=12):
     query_vector= query_vector[np.newaxis,:]
     temp = []
     dist = []
-    print "started"
+    logging.info("started query")
     for k in xrange(index.shape[0]):
         temp.append(index[k])
         if (k+1) % 50000 == 0:
@@ -99,6 +98,7 @@ def nearest(query_vector,index,files,n=12):
         dist.append(spatial.distance.cdist(query_vector,temp))
     dist = np.hstack(dist)
     ranked = np.squeeze(dist.argsort())
+    logging.info("query finished")
     return [files[k] for i,k in enumerate(ranked[:n])]
 
 
@@ -156,7 +156,7 @@ def download(filename):
     except:
         pass
     if AWS:
-        os.system("cp dataset/{} examples/{}".format(filename.split("/")[-1],filename.split("/")[-1]))
+        os.system("cp dataset/{} appcode/static/examples/{}".format(filename.split("/")[-1],filename.split("/")[-1]))
     else:
         os.system("aws s3 cp s3://aub3data/dataset/{} appcode/static/examples/{}".format(filename.split("/")[-1],filename.split("/")[-1]))
 
