@@ -1,6 +1,7 @@
 Visual Search Server
 ===============
-# (under development)
+
+###(under development)
 
 A simple implementation of Visual Search using TensorFlow, InceptionV3 model and AWS GPU instances.
 
