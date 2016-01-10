@@ -2,7 +2,7 @@ import time,glob,re,sys,logging,os
 import numpy as np
 import tensorflow as tf
 from scipy import spatial
-from settings import AWS,INDEX_PATH,CONFIG_PATH
+from settings import AWS,INDEX_PATH,CONFIG_PATH,DATA_PATH
 from tensorflow.python.platform import gfile
 from nearpy import Engine
 from nearpy.hashes import RandomBinaryProjections
@@ -73,7 +73,7 @@ def load_index():
     index,files,findex = [],{},0
     for fname in glob.glob(INDEX_PATH):
         index.append(np.load(fname))
-        for i,f in enumerate(file(fname.replace(".feats_pool3.npy",".files"))):
+        for i,f in enumerate(file(fname.replace(".feats_pool3.npy",".files")).readlines()):
             files[findex] = f.strip()
             ENGINE.store_vector(index[-1][i,:],"{}".format(findex))
             findex += 1
@@ -156,7 +156,7 @@ def download(filename):
     except:
         pass
     if AWS:
-        os.system("cp dataset/{} appcode/static/examples/{}".format(filename.split("/")[-1],filename.split("/")[-1]))
+        os.system("cp /dataset/{} appcode/static/examples/{}".format(filename.split("/")[-1],filename.split("/")[-1]))
     else:
-        os.system("aws s3 cp s3://aub3data/dataset/{} appcode/static/examples/{}".format(filename.split("/")[-1],filename.split("/")[-1]))
+        os.system("aws s3 cp {}{} appcode/static/examples/{}".format(DATA_PATH,filename.split("/")[-1],filename.split("/")[-1]))
 

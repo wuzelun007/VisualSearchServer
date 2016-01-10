@@ -3,7 +3,6 @@ from fabric.state import env
 from fabric.api import env,local,run,sudo,put,cd,lcd,puts,task,get,hide
 from settings import BUCKET_NAME
 import inception
-import data
 from settings import USER,private_key,HOST
 env.user = USER
 env.key_filename = private_key
