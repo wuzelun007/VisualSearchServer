@@ -13,4 +13,4 @@ private_key =  "~/.ssh/cs5356" # "~/.ssh/cornellaub3nca.pem" #
 CONFIG_PATH = __file__.split('settings.py')[0]
 AWS = sys.platform != 'darwin'
 INDEX_PATH = "/home/ubuntu/index/*.npy" if AWS else "/Users/aub3/index/3*.npy"
-DATA_PATH ="/home/ubuntu/dataset/" if AWS else ""
+DATA_PATH ="/home/ubuntu/dataset/" if AWS else "/Users/aub3/target/"

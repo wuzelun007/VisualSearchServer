@@ -107,7 +107,7 @@ def nearest_fast(query_vector,index,files,n=12):
 
 
 def get_batch():
-    path = "dataset/*" if AWS else "data/test/*.jpg"
+    path = DATA_PATH+"/*"
     image_data = {}
     logging.info("starting with path {}".format(path))
     for i,fname in enumerate(glob.glob(path)):
