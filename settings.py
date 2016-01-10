@@ -8,7 +8,7 @@ BUCKET_NAME = "aub3visualsearch"
 BUCKET = s3.Bucket(BUCKET_NAME)
 AMI = ''
 USER = "ubuntu"
-HOST = "54.172.173.214"
+HOST = "52.90.161.41"
 private_key =  "~/.ssh/cs5356" # "~/.ssh/cornellaub3nca.pem" #
 CONFIG_PATH = __file__.split('settings.py')[0]
 AWS = sys.platform != 'darwin'
