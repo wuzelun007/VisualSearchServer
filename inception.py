@@ -137,7 +137,6 @@ def store_index(features,files,count):
 
 def extract_features(image_data,sess):
     pool3 = sess.graph.get_tensor_by_name('pool_3:0')
-    start = time.time()
     features = []
     files = []
     for fname,data in image_data.iteritems():
@@ -146,7 +145,6 @@ def extract_features(image_data,sess):
             features.append(np.squeeze(pool3_features))
         except:
             logging.error("error while processing fname {}".format(fname))
-    logging.info(str(time.time()-start))
     return features,files
 
 

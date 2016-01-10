@@ -79,9 +79,8 @@ def index():
     start = time.time()
     with inception.tf.Session() as sess:
         for image_data in inception.get_batch():
-            logging.info("Batch loaded in {} seconds".format(time.time()-start))
+            logging.info("Batch with {} images loaded in {} seconds".format(len(image_data),time.time()-start))
             start = time.time()
-            logging.info("starting feature extraction batch {}".format(len(image_data)))
             count += 1
             features,files = inception.extract_features(image_data,sess)
             logging.info("Batch with {} images processed in {} seconds".format(len(features),time.time()-start))
