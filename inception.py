@@ -1,8 +1,8 @@
-import time,glob,re,sys,logging,os
+import time,glob,re,sys,logging,os,tempfile
 import numpy as np
 import tensorflow as tf
 from scipy import spatial
-from settings import AWS,INDEX_PATH,CONFIG_PATH,DATA_PATH
+from settings import AWS,INDEX_PATH,CONFIG_PATH,DATA_PATH,BUCKET_NAME,PREFIX
 from tensorflow.python.platform import gfile
 from nearpy import Engine
 from nearpy.hashes import RandomBinaryProjections
@@ -124,15 +124,17 @@ def get_batch():
 
 
 def store_index(features,files,count):
-    feat_fname = "{}.feats_pool3.npy".format(count)
-    files_fname = "{}.files".format(count)
+    tempdir = tempfile.mkdtemp()
+    feat_fname = "{}/{}.feats_pool3.npy".format(tempdir,count)
+    files_fname = "{}/{}.files".format(tempdir,count)
+    logging.info("storing in {}".format(tempdir))
     with open(feat_fname,'w') as feats:
         np.save(feats,np.array(features))
     with open(files_fname,'w') as filelist:
         filelist.write("\n".join(files))
     if AWS:
-        os.system('aws s3 mv {} s3://aub3visualsearch/450k/ --region "us-east-1"'.format(feat_fname))
-        os.system('aws s3 mv {} s3://aub3visualsearch/450k/ --region "us-east-1"'.format(files_fname))
+        os.system('aws s3 mv {}/{} s3://{}/{}/ --region "us-east-1"'.format(tempdir,feat_fname,BUCKET_NAME,PREFIX))
+        os.system('aws s3 mv {}/{} s3://{}/{}/ --region "us-east-1"'.format(tempdir,files_fname,BUCKET_NAME,PREFIX))
         logging.info("uploaded {}".format(feat_fname))
 
 def extract_features(image_data,sess):

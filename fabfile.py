@@ -85,6 +85,7 @@ def index():
             features,files = inception.extract_features(image_data,sess)
             logging.info("Batch with {} images processed in {} seconds".format(len(features),time.time()-start))
             start = time.time()
+            inception.store_index(features,files,count)
 
 @task
 def clear():
