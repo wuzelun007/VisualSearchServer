@@ -133,8 +133,8 @@ def store_index(features,files,count):
     with open(files_fname,'w') as filelist:
         filelist.write("\n".join(files))
     if AWS:
-        os.system('aws s3 mv {}/{} s3://{}/{}/ --region "us-east-1"'.format(tempdir,feat_fname,BUCKET_NAME,PREFIX))
-        os.system('aws s3 mv {}/{} s3://{}/{}/ --region "us-east-1"'.format(tempdir,files_fname,BUCKET_NAME,PREFIX))
+        os.system('aws s3 mv {} s3://{}/{}/ --region "us-east-1"'.format(feat_fname,BUCKET_NAME,PREFIX))
+        os.system('aws s3 mv {} s3://{}/{}/ --region "us-east-1"'.format(files_fname,BUCKET_NAME,PREFIX))
         logging.info("uploaded {}".format(feat_fname))
 
 def extract_features(image_data,sess):

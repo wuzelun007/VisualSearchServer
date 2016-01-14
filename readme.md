@@ -20,8 +20,10 @@ Once logged in run following commands.
  ```
   cd server
   git pull
+  sudo pip install fabric
   python server.py &
   tail -f logs/server.log
+  
 ```
 
 ![Alpha Screenshot](appcode/static/alpha3.png "Alpha Screenshot")     
