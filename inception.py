@@ -145,6 +145,7 @@ def extract_features(image_data,sess):
         try:
             pool3_features = sess.run(pool3,{'DecodeJpeg/contents:0': data})
             features.append(np.squeeze(pool3_features))
+            files.append(fname)
         except:
             logging.error("error while processing fname {}".format(fname))
     return features,files
