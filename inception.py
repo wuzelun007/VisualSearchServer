@@ -135,7 +135,7 @@ def store_index(features,files,count):
     if AWS:
         os.system('aws s3 mv {} s3://{}/{}/ --region "us-east-1"'.format(feat_fname,BUCKET_NAME,PREFIX))
         os.system('aws s3 mv {} s3://{}/{}/ --region "us-east-1"'.format(files_fname,BUCKET_NAME,PREFIX))
-        logging.info("uploaded {}".format(feat_fname))
+        logging.info("uploaded {} and {} to s3://{}/{}/ ".format(feat_fname,files_fname,BUCKET_NAME,PREFIX))
 
 def extract_features(image_data,sess):
     pool3 = sess.graph.get_tensor_by_name('pool_3:0')
