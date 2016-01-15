@@ -12,6 +12,8 @@ get even better performance.
 The code implements two methods, a server that handles image search, and a simple indexer that extracts pool3 features.
 Nearest neighbor search can be performed in an approximate manner using nearpy (faster) or using exact methods (slower).
  
+![Alpha Screenshot](appcode/static/alpha3.png "Alpha Screenshot")     
+
 
 ####Run server 
 The easiest way to use the code is to launch "ami-537b2339" in AWS North Virginia (us-east-1) region.     
@@ -24,7 +26,6 @@ Once logged in run following commands.
   sudo pip install fabric
   python server.py &
   tail -f logs/server.log
-  
 ```
 
 ####Index images
@@ -36,12 +37,8 @@ Once logged in run following commands.
   sudo pip install fabric
   fab index &
   tail -f logs/worker.log
-  
 ```
 
-
-
-![Alpha Screenshot](appcode/static/alpha3.png "Alpha Screenshot")     
 
 #### Following libraries & templates are used:
 1. https://almsaeedstudio.com/
