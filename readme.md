@@ -33,7 +33,7 @@ Once logged in run following commands.
 - configure AWS cli, using aws configure   
 - We strongly recommended using IAM roles, rather than manually entering credentials. 
 - set BUCKET_NAME and PREFIX in settings.py    
-- copy images in ~/Dataset folder   
+- copy images in \~\/Dataset folder   
 
 
  ```
