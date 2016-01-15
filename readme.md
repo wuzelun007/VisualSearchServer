@@ -27,7 +27,7 @@ Once logged in run following commands.
   
 ```
 
-####Indexi images
+####Index images
 * copy images in ~/Dataset folder
 * set BUCKET_NAME and PREFIX in settings.py
 * Ensure that 
@@ -43,11 +43,11 @@ Once logged in run following commands.
 
 ![Alpha Screenshot](appcode/static/alpha3.png "Alpha Screenshot")     
 
-Following libraries & templates are used:
+#### Following libraries & templates are used:
 1. https://almsaeedstudio.com/
 2. http://fabricjs.com/kitchensink/
 3. https://github.com/karpathy/convnetjs
 4. https://www.tensorflow.org/ 
-5.
+5. http://nearpy.io/
 License:
 Copyright 2015, Cornell University. 
