@@ -32,8 +32,8 @@ Once logged in run following commands.
 
 - configure AWS cli, using aws configure   
 - We strongly recommended using IAM roles, rather than manually entering credentials. 
-- copy images in ~/Dataset folder   
 - set BUCKET_NAME and PREFIX in settings.py    
+- copy images in ~/Dataset folder   
 
 
  ```
@@ -49,5 +49,7 @@ Once logged in run following commands.
 3. https://github.com/karpathy/convnetjs
 4. https://www.tensorflow.org/ 
 5. http://nearpy.io/
-License:
+
+   
+License:    
 Copyright 2015, Cornell University. 
