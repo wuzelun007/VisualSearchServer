@@ -12,7 +12,8 @@ get even better performance.
 The code implements two methods, a server that handles image search, and a simple indexer that extracts pool3 features.
 Nearest neighbor search can be performed in an approximate manner using nearpy (faster) or using exact methods (slower).
  
- 
+
+####Run server 
 The easiest way to use the code is to launch "ami-537b2339" in AWS North Virginia (us-east-1) region.     
 The AMI contains 450,000 images and computed index. Make sure that you keep port 9000 open.
 Once logged in run following commands.
@@ -26,6 +27,27 @@ Once logged in run following commands.
   
 ```
 
+####Indexi images
+* copy images in ~/Dataset folder
+* set BUCKET_NAME and PREFIX in settings.py
+* Ensure that 
+
+ ```
+  sudo pip install fabric
+  fab index &
+  tail -f logs/worker.log
+  
+```
+
+
+
 ![Alpha Screenshot](appcode/static/alpha3.png "Alpha Screenshot")     
 
- 
+Following libraries & templates are used:
+1. https://almsaeedstudio.com/
+2. http://fabricjs.com/kitchensink/
+3. https://github.com/karpathy/convnetjs
+4. https://www.tensorflow.org/ 
+5.
+License:
+Copyright 2015, Cornell University. 
