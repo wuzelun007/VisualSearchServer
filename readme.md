@@ -29,11 +29,11 @@ Once logged in run following commands.
 ```
 
 ####Index images
+We strongly recommended using IAM roles, rather than manually entering credentials.
 
-- configure AWS cli, using aws configure   
-- We strongly recommended using IAM roles, rather than manually entering credentials. 
-- set BUCKET_NAME and PREFIX in settings.py    
-- copy images in \~\/Dataset folder   
+- configure AWS cli, using aws configure    
+- set BUCKET\_NAME and PREFIX in settings.py    
+- copy images to Dataset folder   
 
 
  ```
