@@ -20,7 +20,7 @@
                 <input type='file'  id='imgfile' style="display:none"/>
                 <a type='button' class="btn btn-app btn-default" id='btnLoad' ng-click='load_image();'><i class="fa fa-image"></i>Add image</a>
             </form>
-            <button id="drawing-mode_f"
+            <button  style="display:None" id="drawing-mode_f"
               ng-click="setFreeDrawingMode(!getFreeDrawingMode(1),1)"
               ng-class="{'btn-inverse': getFreeDrawingMode(1)}" class="btn bg-green btn-app">
               <i class="fa fa-pencil"></i> Highlight </button>
