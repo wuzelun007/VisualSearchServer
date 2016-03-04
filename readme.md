@@ -24,7 +24,10 @@ Once logged in run following commands.
   cd server
   git pull
   sudo pip install fabric
-  python server.py &
+  sudo pip install --upgrade awscli
+  sudo chmod 777 /mnt/
+  aws cp s3://aub3visualsearch/ /mnt/ --recursive  
+  python server.py &  
   tail -f logs/server.log
 ```
 

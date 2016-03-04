@@ -42,7 +42,7 @@ def setup():
     Task for initial set up of AWS instance.
     """
     sudo("chmod 777 /mnt/")
-    run("cp -r index /mnt/")
+    run('aws s3 cp s3://aub3visualsearch/ /mnt/ --recursive --request-payer "requester" ')
 
 
 
