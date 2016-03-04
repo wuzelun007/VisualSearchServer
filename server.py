@@ -11,6 +11,6 @@ from appcode import app
 from settings import AWS
 if __name__ == '__main__':
     if AWS:
-        app.run(host="0.0.0.0",port=9000)
+        app.run(host="0.0.0.0",port=9000,debug=False)
     else:
         app.run(port=9992,debug=True)

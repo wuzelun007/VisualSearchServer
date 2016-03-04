@@ -337,7 +337,7 @@ $scope.refreshData = function(){
             obj.opacity = 1.0;
         }
         else{
-            obj.opacity = 0.6;
+            obj.opacity = 1.0;
         }
     });
     canvas.renderAll();
