@@ -168,7 +168,7 @@ var tour = {
     },
     {
       title: "Hide sensitive information",
-      content: "Mark regions to exclude.",
+      content: "Mark regions to exclude. ",
       target: document.querySelector("#drawing-mode_b"),
       placement: "bottom"
     },
