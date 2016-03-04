@@ -167,34 +167,16 @@ var tour = {
       placement: "right"
     },
     {
-      title: "Draw foreground",
-      content: "Optional foreground regions.",
-      target: document.querySelector("#drawing-mode_f"),
-      placement: "bottom"
-    },
-    {
-      title: "Draw background",
-      content: "Mark background regions.",
+      title: "Hide sensitive information",
+      content: "Mark regions to exclude.",
       target: document.querySelector("#drawing-mode_b"),
       placement: "bottom"
     },
     {
-      title: "Click to segment",
-      content: "Once you have marked the image click to segment, you can further edit your masks and segment again.",
+      title: "Click to Search",
+      content: "Search for similar images",
       target: document.querySelector("#segment"),
       placement: "right"
-    },
-    {
-      title: "Download",
-      content: "Click to download results",
-      target: document.querySelector("#rasterize"),
-      placement: "bottom"
-    },
-    {
-      title: "Export",
-      content: "Or export to editor and combine with additional images.",
-      target: document.querySelector("#export"),
-      placement: "bottom"
     }
   ]
 };
