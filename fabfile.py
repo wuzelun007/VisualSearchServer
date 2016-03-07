@@ -93,3 +93,30 @@ def clear():
     delete logs
     """
     local('rm logs/*.log &')
+
+
+@task
+def get_videos():
+    with cd("/mnt/video"):
+        run('youtube-dl "https://www.youtube.com/playlist?list=PLccnpqMfP0kwx4qaj1ZZw9YJtTOptmBJJ" -o "%(epoch)s.%(ext)s" --ignore-errors')
+
+@task
+def get_frames():
+    videos = """
+    """
+    for i,v in enumerate(videos.strip().split("\n")):
+        v = v.strip()
+        if v:
+            for i in range(500):
+                command = 'ffmpeg -accurate_seek -ss {} -i /mnt/video/{}   -frames:v 1 /mnt/frames/{}.{}.jpg'.format(15.0*i,v,v,i)
+                retval = run(command)
+                if retval.return_code != 0:
+                    break
+            run('cd /mnt/frames;aws s3 mv . s3://aub3data/nyc/frames/ --recursive --storage-class "REDUCED_REDUNDANCY"')
+            run('cd /mnt/video/;aws s3 mv {} s3://aub3data/nyc/videos/ --storage-class "REDUCED_REDUNDANCY"'.format(v))
+
+@task
+def install_ffmpeg():
+    sudo("add-apt-repository ppa:kirillshkrogalev/ffmpeg-next")
+    sudo("apt-get update")
+    sudo("apt-get install ffmpeg")

@@ -33,11 +33,11 @@ Once logged in run following commands.
 
 ####Index images
 We strongly recommended using IAM roles, rather than manually entering credentials.
-
+```
 - configure AWS cli, using aws configure    
 - set BUCKET\_NAME and PREFIX in settings.py    
 - copy images to Dataset folder   
-
+```
 
  ```
   sudo pip install fabric
