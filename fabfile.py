@@ -14,6 +14,8 @@ logging.basicConfig(level=logging.INFO,
                     filemode='a')
 
 
+# run('aws s3 cp s3://aub3visualsearch/ /mnt/ --recursive') # --request-payer "requester"  is not supported by AWS-CLI
+
 @task
 def notebook():
     """
@@ -42,7 +44,21 @@ def setup():
     Task for initial set up of AWS instance.
     """
     sudo("chmod 777 /mnt/")
-    run('aws s3 cp s3://aub3visualsearch/ /mnt/ --recursive') # --request-payer "requester"  is not supported by AWS-CLI
+    sudo("add-apt-repository ppa:kirillshkrogalev/ffmpeg-next")
+    sudo("apt-get update")
+    sudo("apt-get install -y ffmpeg")
+    sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927")
+    sudo('echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list')
+    sudo('apt-get update')
+    sudo('apt-get install -y mongodb-org')
+    sudo('service mongod start')
+
+@task
+def load_mongodb():
+    pass
+
+
+
 
 
 
@@ -115,8 +131,3 @@ def get_frames():
             run('cd /mnt/frames;aws s3 mv . s3://aub3data/nyc/frames/ --recursive --storage-class "REDUCED_REDUNDANCY"')
             run('cd /mnt/video/;aws s3 mv {} s3://aub3data/nyc/videos/ --storage-class "REDUCED_REDUNDANCY"'.format(v))
 
-@task
-def install_ffmpeg():
-    sudo("add-apt-repository ppa:kirillshkrogalev/ffmpeg-next")
-    sudo("apt-get update")
-    sudo("apt-get install ffmpeg")
