@@ -51,15 +51,18 @@ def setup():
     sudo('echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list')
     sudo('apt-get update')
     sudo('apt-get install -y mongodb-org')
-    sudo('service mongod start')
-
-@task
-def load_mongodb():
-    pass
-
-
-
-
+    try:
+        sudo('service mongod start')
+    except:
+        pass
+    try:
+        run("rm -rf VisualSearchServer")
+    except:
+        pass
+    run("git clone https://github.com/AKSHAYUBHAT/VisualSearchServer")
+    with cd("VisualSearchServer/appcode/db/dump/visiondb"):
+        run("gzip -d *")
+    run("mongorestore --db visiondb VisualSearchServer/appcode/db/dump/visiondb")
 
 
 

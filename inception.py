@@ -69,6 +69,7 @@ def load_network(png=False):
         else:
             _ = tf.import_graph_def(graph_def, name='')
 
+
 def load_index():
     index,files,findex = [],{},0
     for fname in glob.glob(INDEX_PATH):
