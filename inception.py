@@ -76,7 +76,9 @@ def load_network(png=False):
 
 def load_index():
     index,files,findex = [],{},0
+    print "Using index path : {}".format(INDEX_PATH+"*.npy")
     for fname in glob.glob(INDEX_PATH+"*.npy"):
+        print "Starting {}".format(fname)
         logging.info("Starting {}".format(fname))
         index.append(np.load(fname))
         for i,f in enumerate(file(fname.replace(".feats_pool3.npy",".files")).readlines()):
