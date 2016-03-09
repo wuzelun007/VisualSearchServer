@@ -16,17 +16,15 @@ Nearest neighbor search can be performed in an approximate manner using nearpy (
 
 
 ####Run server 
-The easiest way to use the code is to launch "ami-537b2339" in AWS North Virginia (us-east-1) region.     
+The easiest way to use the code is to launch "ami-b80f0ad2" in AWS North Virginia (us-east-1) region.     
 The AMI contains 450,000 images and computed index. Make sure that you keep port 9000 open.
 Once logged in run following commands.
 
- ```
-  cd server
+ ``` 
+  cd VisualSearchServer
   git pull
-  sudo pip install fabric
-  sudo pip install --upgrade awscli
   sudo chmod 777 /mnt/
-  aws cp s3://aub3visualsearch/ /mnt/ --recursive  
+  aws s3api get_object s3://aub3visualsearch/ /mnt/ --recursive  
   python server.py &  
   tail -f logs/server.log
 ```
@@ -39,7 +37,7 @@ Store all images in a single directory, specify path to that directory which con
 BUCKET_NAME = "aub3visualsearch"
 PREFIX = "nyc"
 INDEX_PATH = "/mnt/nyc_index/" 
-DATA_PATH ="/mnt/nyc_images/" # /mnt/ is mounted on instance store on AWS
+DATA_PATH ="/mnt/nyc_images/" # /mnt/ is mounted with instance store on AWS
 ```
 
 We strongly recommended using IAM roles, rather than manually entering credentials.
@@ -48,9 +46,9 @@ Configure AWS cli using
 aws configure   
 ```
 
-
+To perform indexing run following. 
 ```
-  sudo pip install fabric
+  cd ~/VisualSearchServer/
   fab index &
   tail -f logs/worker.log
 ```
