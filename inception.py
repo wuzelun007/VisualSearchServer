@@ -80,12 +80,17 @@ def load_index():
     for fname in glob.glob(INDEX_PATH+"*.npy"):
         print "Starting {}".format(fname)
         logging.info("Starting {}".format(fname))
-        index.append(np.load(fname))
-        for i,f in enumerate(file(fname.replace(".feats_pool3.npy",".files")).readlines()):
-            files[findex] = f.strip()
-            ENGINE.store_vector(index[-1][i,:],"{}".format(findex))
-            findex += 1
-        logging.info("Loaded {}".format(fname))
+        try:
+            index.append(np.load(fname))
+        except:
+            logging.error("Could not load {}".format(fname))
+            pass
+        else:
+            for i,f in enumerate(file(fname.replace(".feats_pool3.npy",".files")).readlines()):
+                files[findex] = f.strip()
+                ENGINE.store_vector(index[-1][i,:],"{}".format(findex))
+                findex += 1
+            logging.info("Loaded {}".format(fname))
     index = np.concatenate(index)
     return index,files
 
