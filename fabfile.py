@@ -1,7 +1,7 @@
 import os,sys,logging,time
 from fabric.state import env
 from fabric.api import env,local,run,sudo,put,cd,lcd,puts,task,get,hide
-from settings import BUCKET_NAME,DATA_PATH
+from settings import BUCKET_NAME,DATA_PATH,INDEX_PATH
 import inception
 from settings import USER,private_key,HOST
 env.user = USER
@@ -41,11 +41,22 @@ def notebook():
 def setup():
     """
     Task for initial set up of AWS instance.
+    Used AMI modified for Python2.7 https://gist.github.com/AlexJoz/1670baf0b32573ca7923
     """
     sudo("chmod 777 /mnt/")
     sudo("add-apt-repository ppa:kirillshkrogalev/ffmpeg-next")
     sudo("apt-get update")
     sudo("apt-get install -y ffmpeg")
+    run("git clone https://github.com/AKSHAYUBHAT/VisualSearchServer")
+    sudo("pip install fabric")
+    sudo("pip install --upgrade awscli")
+    sudo("pip install --upgrade fabric")
+    sudo("pip install --upgrade flask")
+    sudo("pip install --upgrade ipython")
+    sudo("pip install --upgrade jupyter")
+    sudo("apt-get install -y python-scipy")
+    sudo("apt-get install -y libblas-dev liblapack-dev libatlas-base-dev gfortran")
+    sudo("pip install --upgrade nearpy")
 
 
 
@@ -88,7 +99,7 @@ def index(directory=DATA_PATH):
             features,files = inception.extract_features(image_data,sess)
             logging.info("Batch with {} images processed in {} seconds".format(len(features),time.time()-start))
             start = time.time()
-            inception.store_index(features,files,count)
+            inception.store_index(features,files,count,INDEX_PATH)
 
 @task
 def clear():
