@@ -12,7 +12,8 @@ get even better performance.
 The code implements two methods, a server that handles image search, and a simple indexer that extracts pool3 features.
 Nearest neighbor search can be performed in an approximate manner using nearpy (faster) or using exact methods (slower).
  
-![Alpha Screenshot](appcode/static/alpha3.png "Alpha Screenshot")     
+![UI Screenshot](appcode/static/alpha3.png "Alpha Screenshot Female Fashion")
+![UI Screenshot](appcode/static/alpha4.png "Alpha Screenshot NYC, Streetview & Dashcam")
 
 ####Running code on AWS
 
