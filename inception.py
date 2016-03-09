@@ -76,12 +76,16 @@ def load_network(png=False):
 
 
 def load_index():
-    index,files,findex = np.array([]),{},0
+    index,files,findex = [],{},0
     print "Using index path : {}".format(INDEX_PATH+"*.npy")
     for fname in glob.glob(INDEX_PATH+"*.npy"):
         logging.info("Starting {}".format(fname))
         try:
-            index = np.concatenate([index,np.load(fname)])
+            t = np.load(fname)
+            if max(t.shape) > 0:
+                index.append(t)
+            else:
+                raise ValueError
         except:
             logging.error("Could not load {}".format(fname))
             pass
@@ -91,6 +95,7 @@ def load_index():
                 ENGINE.store_vector(index[-1][i,:],"{}".format(findex))
                 findex += 1
             logging.info("Loaded {}".format(fname))
+    index = np.concatenate(index)
     return index,files
 
 
