@@ -16,17 +16,16 @@ Nearest neighbor search can be performed in an approximate manner using nearpy (
 
 ####Running code on AWS
 
-The easiest way to use the code is to launch "ami-b80f0ad2" in AWS North Virginia (us-east-1) region.     
-Make sure that you keep port 9000 open. Once logged in run following commands.
+The easiest way to use this project is to launch "ami-b80f0ad2" in AWS North Virginia (us-east-1) region.     
+Make sure that you keep port 9000 open and use "g2.2xlarge" instance type.
 We strongly recommended using IAM roles, rather than manually entering credentials. 
 However you might need to configure AWS region "us-east-1" manually.
-
+Once logged in run following commands.
  ``` 
   cd VisualSearchServer
   git pull
   sudo chmod 777 /mnt/
   aws configure   
-
 ```
 
 ####Index images
@@ -57,7 +56,9 @@ tail -f logs/server.log
 
 ####Run demo with precomputed index  
 ```
-cd VisualSearchServer;
+cd VisualSearchServer
+git pull
+sudo chmod 777 /mnt/
 fab demo_fashion 
 ```
 
