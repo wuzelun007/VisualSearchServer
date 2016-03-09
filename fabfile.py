@@ -82,7 +82,7 @@ def demo_fashion():
     local('cd /mnt/;tar -zxvf fashion_index.tar.gz')
     local('echo "\nDEMO=\'fashion_images\'" >> settings.py')
     local('echo "\nINDEX_PATH=\'/mnt/fashion_index/\'" >> settings.py')
-    local('python server.py')
+    local('python server.py &; tail -f logs/server.log')
 
 
 
