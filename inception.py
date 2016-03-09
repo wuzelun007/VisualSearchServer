@@ -165,7 +165,7 @@ def extract_features(image_data,sess):
 
 def download(filename):
     if DEMO:
-        command = 'aws s3api get-object --bucket aub3visualsearch --key "fashion_images/{}" --request-payer requester appcode/static/examples/{}'.format(filename,filename)
+        command = 'aws s3api get-object --bucket aub3visualsearch --key "{}/{}" --request-payer requester appcode/static/examples/{}'.format(DEMO,filename,filename)
         logging.info(command)
         os.system(command)
     else:
