@@ -78,7 +78,6 @@ def load_index():
     index,files,findex = [],{},0
     print "Using index path : {}".format(INDEX_PATH+"*.npy")
     for fname in glob.glob(INDEX_PATH+"*.npy"):
-        print "Starting {}".format(fname)
         logging.info("Starting {}".format(fname))
         try:
             index.append(np.load(fname))
