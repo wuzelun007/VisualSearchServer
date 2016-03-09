@@ -3,6 +3,10 @@ import numpy as np
 import tensorflow as tf
 from scipy import spatial
 from settings import AWS,INDEX_PATH,CONFIG_PATH,DATA_PATH,BUCKET_NAME,PREFIX
+try:
+    from settings import DEMO
+except ImportError:
+    DEMO = None
 from tensorflow.python.platform import gfile
 from nearpy import Engine
 from nearpy.hashes import RandomBinaryProjections
@@ -157,5 +161,10 @@ def extract_features(image_data,sess):
 
 
 def download(filename):
-    os.system("cp {}/{} appcode/static/examples/{}".format(DATA_PATH,filename.split("/")[-1],filename.split("/")[-1]))
+    if DEMO:
+        command = 'aws s3api get-object --bucket aub3visualsearch --key "fashion_images/{}" --request-payer requester appcode/static/examples/{}'.format(filename,filename)
+        logging.info(command)
+        os.system(command)
+    else:
+        os.system("cp {}/{} appcode/static/examples/{}".format(DATA_PATH,filename.split("/")[-1],filename.split("/")[-1]))
 

@@ -55,7 +55,11 @@ python server.py &
 tail -f logs/server.log
 ```
 
-
+####Run demo with precomputed index  
+```
+cd VisualSearchServer;
+fab demo_fashion 
+```
 
 #### Following libraries & templates are used:
 1. https://almsaeedstudio.com/

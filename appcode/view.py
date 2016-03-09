@@ -3,6 +3,7 @@ __author__ = 'aub3'
 from flask import render_template, redirect, request, abort,jsonify
 import base64
 from inception import *
+
 png_data = load_network(True)
 sess = tf.InteractiveSession()
 index,files = load_index()

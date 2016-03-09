@@ -78,11 +78,12 @@ def server_remote():
 
 @task
 def demo_fashion():
-    pass
+    local('aws s3api get-object --bucket aub3visualsearch --key "fashion_index.tar.gz" --request-payer requester /mnt/fashion_index.tar.gz')
+    local('cd /mnt/;tar -zxvf fashion_index.tar.gz')
+    local('echo "DEMO=\'fashion_images\'" >> settings.py')
+    local('echo "INDEX_PATH=\'/mnt/fashion_images\'" >> settings.py')
+    local('python server.py')
 
-@task
-def demo_nyc():
-    pass
 
 
 
