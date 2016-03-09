@@ -72,14 +72,15 @@ def connect():
 
 
 @task
-def server(rlocal=False):
+def server():
     """
     start server
     """
-    if rlocal:
-        local('python server.py')
-    else:
-        run('python server.py')
+    local('python server.py')
+
+@task
+def server_remote():
+    run('python server.py')
 
 
 @task
