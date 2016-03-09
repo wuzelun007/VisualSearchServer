@@ -157,12 +157,5 @@ def extract_features(image_data,sess):
 
 
 def download(filename):
-    try:
-        os.mkdir("appcode/static/examples")
-    except:
-        pass
-    if AWS:
-        os.system("cp {}/{} appcode/static/examples/{}".format(DATA_PATH,filename.split("/")[-1],filename.split("/")[-1]))
-    else:
-        os.system("aws s3 cp s3:/aub3data/dataset/{} appcode/static/examples/{}".format(filename.split("/")[-1],filename.split("/")[-1]))
+    os.system("cp {}/{} appcode/static/examples/{}".format(DATA_PATH,filename.split("/")[-1],filename.split("/")[-1]))
 

@@ -94,7 +94,8 @@ def index():
     try:
         os.mkdir(INDEX_PATH)
     except:
-        pass
+        print "Could not created {}, if its on /mnt/ have you set correct permissions?".format(INDEX_PATH)
+        raise ValueError
     inception.load_network()
     count = 0
     start = time.time()
