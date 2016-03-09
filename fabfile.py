@@ -18,23 +18,16 @@ logging.basicConfig(level=logging.INFO,
 @task
 def notebook():
     """
-    Run IPython notebook on an AWS server
-    run("openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.key -out mycert.pem")
-    c = get_config()
-    c.NotebookApp.open_browser = False
-    c.NotebookApp.ip = '0.0.0.0'
-    c.NotebookApp.port = 8888
-    c.NotebookApp.certfile = u'/home/ubuntu/mycert.pem'
-    c.NotebookApp.enable_mathjax = False
-    c.NotebookApp.password = u'{}'
-    #--certfile=mycert.pem
-    :return:
+    Run an IPython notebook on an AWS server
     """
     from IPython.lib.security import passwd
-    command = "ipython notebook --ip=0.0.0.0  --NotebookApp.password={} --no-browser".format(passwd())
+    command = "ipython notebook --ip=0.0.0.0  --certfile=mycert.pem --NotebookApp.password={} --no-browser".format(passwd())
     print command
     run(command)
 
+@task
+def gen_ssl():
+    run("openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.key -out mycert.pem")
 
 
 @task
@@ -81,6 +74,15 @@ def server():
 @task
 def server_remote():
     run('python server.py')
+
+@task
+def demo_fashion():
+    pass
+
+@task
+def demo_nyc():
+    pass
+
 
 
 @task
