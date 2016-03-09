@@ -76,7 +76,7 @@ def load_network(png=False):
 
 
 def load_index():
-    index,files,findex = [],{},0
+    index,files,findex = np.array([]),{},0
     print "Using index path : {}".format(INDEX_PATH+"*.npy")
     for fname in glob.glob(INDEX_PATH+"*.npy"):
         logging.info("Starting {}".format(fname))
