@@ -178,5 +178,5 @@ def download(filename):
         logging.info(command)
         os.system(command)
     else:
-        os.system("cp {}/{} appcode/static/examples/{}".format(DATA_PATH,filename.split("/")[-1],filename.split("/")[-1]))
+        os.system("cp {}/{} appcode/static/examples/{}".format(DATA_PATH,filename.split("/")[-1],filename.split("/")[-1])) # this needlessly slows down the code, handle it elegantly by using the same directory as static dir in flask.
 

@@ -48,7 +48,6 @@ To perform indexing run following.
   tail -f logs/worker.log
 ```
 
-
 ####Run retrieval server  
 ``` 
 python server.py &  
@@ -57,13 +56,20 @@ tail -f logs/server.log
 
 ####Run demo with precomputed index  
 Note that following code will download about ~3Gb indexes from S3 and it will also download individual images while generating results for queries.
-This should not be a problem when running on AWS / correct region. It will take about 10 minutes to download, extract and load index in the memory. 
+This should not be a problem when running on AWS / correct region. It will take about 2 minutes (NYC) ~ 10 minutes (Fashion)  to download, extract and load index in the memory.
 ```
 cd VisualSearchServer
 git pull
 sudo chmod 777 /mnt/
-fab demo_fashion 
+fab demo_fashion
+// or run dashcam/streetview/nyc demo
+fab demo_nyc
 ```
+A successful completion will result in following message:
+```
+03-09 11:33 werkzeug     INFO      * Running on http://0.0.0.0:9000/ (Press CTRL+C to quit)
+```
+You can then  use browser to access web UI on port 9000 of the instance DNS/IP.
 
 #### Following libraries & templates are used:
 1. https://almsaeedstudio.com/
