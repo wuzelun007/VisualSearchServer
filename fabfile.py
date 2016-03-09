@@ -83,16 +83,20 @@ def server(rlocal=False):
 
 
 @task
-def index(directory=DATA_PATH):
+def index():
     """
     Index images
     """
-    logging.info("Starting with images present in {}".format(DATA_PATH))
+    logging.info("Starting with images present in {} storing index in {}".format(DATA_PATH,INDEX_PATH))
+    try:
+        os.mkdir(INDEX_PATH)
+    except:
+        pass
     inception.load_network()
     count = 0
     start = time.time()
     with inception.tf.Session() as sess:
-        for image_data in inception.get_batch(directory):
+        for image_data in inception.get_batch(DATA_PATH):
             logging.info("Batch with {} images loaded in {} seconds".format(len(image_data),time.time()-start))
             start = time.time()
             count += 1
