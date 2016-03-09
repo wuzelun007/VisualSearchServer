@@ -35,6 +35,7 @@ def setup():
     """
     Task for initial set up of AWS instance.
     Used AMI modified for Python2.7 https://gist.github.com/AlexJoz/1670baf0b32573ca7923
+    Following commands show other packages/libraries installed while setting up the AMI
     """
     sudo("chmod 777 /mnt/")
     sudo("add-apt-repository ppa:kirillshkrogalev/ffmpeg-next")

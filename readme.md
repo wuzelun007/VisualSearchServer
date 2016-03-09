@@ -14,24 +14,25 @@ Nearest neighbor search can be performed in an approximate manner using nearpy (
  
 ![Alpha Screenshot](appcode/static/alpha3.png "Alpha Screenshot")     
 
+####Running code on AWS
 
-####Run server 
 The easiest way to use the code is to launch "ami-b80f0ad2" in AWS North Virginia (us-east-1) region.     
-The AMI contains 450,000 images and computed index. Make sure that you keep port 9000 open.
-Once logged in run following commands.
+Make sure that you keep port 9000 open. Once logged in run following commands.
+We strongly recommended using IAM roles, rather than manually entering credentials. 
+However you might need to configure AWS region "us-east-1" manually.
 
  ``` 
   cd VisualSearchServer
   git pull
   sudo chmod 777 /mnt/
-  aws s3api get_object s3://aub3visualsearch/ /mnt/ --recursive  
-  python server.py &  
-  tail -f logs/server.log
+  aws configure   
+
 ```
 
 ####Index images
 The code provides a single index operation to index images using Pool3 features.
-Store all images in a single directory, specify path to that directory which contains images, path to a directory for storing indexes, S3 bucket and prefix to backup computed features.   
+Store all images in a single directory, specify path to that directory. 
+Specify path to a directory for storing indexes, an S3 bucket and prefix to backup computed features.   
 ```
 # edit settings.py
 BUCKET_NAME = "aub3visualsearch"
@@ -40,18 +41,20 @@ INDEX_PATH = "/mnt/nyc_index/"
 DATA_PATH ="/mnt/nyc_images/" # /mnt/ is mounted with instance store on AWS
 ```
 
-We strongly recommended using IAM roles, rather than manually entering credentials.
-Configure AWS cli using 
-```
-aws configure   
-```
-
 To perform indexing run following. 
 ```
   cd ~/VisualSearchServer/
   fab index &
   tail -f logs/worker.log
 ```
+
+
+####Run retrieval server  
+``` 
+python server.py &  
+tail -f logs/server.log
+```
+
 
 
 #### Following libraries & templates are used:
