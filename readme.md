@@ -32,14 +32,24 @@ Once logged in run following commands.
 ```
 
 ####Index images
-We strongly recommended using IAM roles, rather than manually entering credentials.
+The code provides a single index operation to index images using Pool3 features.
+Store all images in a single directory, specify path to that directory which contains images, path to a directory for storing indexes, S3 bucket and prefix to backup computed features.   
 ```
-- configure AWS cli, using aws configure    
-- set BUCKET\_NAME and PREFIX in settings.py    
-- copy images to Dataset folder   
+# edit settings.py
+BUCKET_NAME = "aub3visualsearch"
+PREFIX = "nyc"
+INDEX_PATH = "/mnt/nyc_index/" 
+DATA_PATH ="/mnt/nyc_images/" # /mnt/ is mounted on instance store on AWS
 ```
 
- ```
+We strongly recommended using IAM roles, rather than manually entering credentials.
+Configure AWS cli using 
+```
+aws configure   
+```
+
+
+```
   sudo pip install fabric
   fab index &
   tail -f logs/worker.log

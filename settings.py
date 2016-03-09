@@ -1,10 +1,11 @@
 import sys
-BUCKET_NAME = "aub3visualsearch"
-PREFIX = "test"
 USER = "ubuntu"
-HOST = "52.87.203.218"
+HOST = "54.208.84.141"
+AWS = sys.platform != 'darwin'
 private_key =  "~/.ssh/cs5356"
 CONFIG_PATH = __file__.split('settings.py')[0]
-AWS = sys.platform != 'darwin'
-INDEX_PATH = "/mnt/*.npy" if AWS else "/Users/aub3/index/3*.npy"
-DATA_PATH ="/home/ubuntu/dataset/" if AWS else "/Users/aub3/target/"
+
+BUCKET_NAME = "aub3visualsearch"
+PREFIX = "nyc"
+INDEX_PATH = "/mnt/nyc_index/*.npy"
+DATA_PATH ="/mnt/nyc_images/"

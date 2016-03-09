@@ -1,7 +1,7 @@
 import os,sys,logging,time
 from fabric.state import env
 from fabric.api import env,local,run,sudo,put,cd,lcd,puts,task,get,hide
-from settings import BUCKET_NAME
+from settings import BUCKET_NAME,DATA_PATH
 import inception
 from settings import USER,private_key,HOST
 env.user = USER
@@ -14,7 +14,6 @@ logging.basicConfig(level=logging.INFO,
                     filemode='a')
 
 
-# run('aws s3 cp s3://aub3visualsearch/ /mnt/ --recursive') # --request-payer "requester"  is not supported by AWS-CLI
 
 @task
 def notebook():
@@ -47,22 +46,6 @@ def setup():
     sudo("add-apt-repository ppa:kirillshkrogalev/ffmpeg-next")
     sudo("apt-get update")
     sudo("apt-get install -y ffmpeg")
-    sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927")
-    sudo('echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list')
-    sudo('apt-get update')
-    sudo('apt-get install -y mongodb-org')
-    try:
-        sudo('service mongod start')
-    except:
-        pass
-    try:
-        run("rm -rf VisualSearchServer")
-    except:
-        pass
-    run("git clone https://github.com/AKSHAYUBHAT/VisualSearchServer")
-    with cd("VisualSearchServer/appcode/db/dump/visiondb"):
-        run("gzip -d *")
-    run("mongorestore --db visiondb VisualSearchServer/appcode/db/dump/visiondb")
 
 
 
@@ -89,15 +72,16 @@ def server(rlocal=False):
 
 
 @task
-def index():
+def index(directory=DATA_PATH):
     """
     Index images
     """
+    logging.info("Starting with images present in {}".format(DATA_PATH))
     inception.load_network()
     count = 0
     start = time.time()
     with inception.tf.Session() as sess:
-        for image_data in inception.get_batch():
+        for image_data in inception.get_batch(directory):
             logging.info("Batch with {} images loaded in {} seconds".format(len(image_data),time.time()-start))
             start = time.time()
             count += 1
@@ -113,24 +97,4 @@ def clear():
     """
     local('rm logs/*.log &')
 
-
-@task
-def get_videos():
-    with cd("/mnt/video"):
-        run('youtube-dl "https://www.youtube.com/playlist?list=PLccnpqMfP0kwx4qaj1ZZw9YJtTOptmBJJ" -o "%(epoch)s.%(ext)s" --ignore-errors')
-
-@task
-def get_frames():
-    videos = """
-    """
-    for i,v in enumerate(videos.strip().split("\n")):
-        v = v.strip()
-        if v:
-            for i in range(500):
-                command = 'ffmpeg -accurate_seek -ss {} -i /mnt/video/{}   -frames:v 1 /mnt/frames/{}.{}.jpg'.format(15.0*i,v,v,i)
-                retval = run(command)
-                if retval.return_code != 0:
-                    break
-            run('cd /mnt/frames;aws s3 mv . s3://aub3data/nyc/frames/ --recursive --storage-class "REDUCED_REDUNDANCY"')
-            run('cd /mnt/video/;aws s3 mv {} s3://aub3data/nyc/videos/ --storage-class "REDUCED_REDUNDANCY"'.format(v))
 

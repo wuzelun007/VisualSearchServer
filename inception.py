@@ -17,7 +17,7 @@ PROJECTIONBITS = 16
 ENGINE = Engine(DIMENSIONS, lshashes=[RandomBinaryProjections('rbp', PROJECTIONBITS,rand_seed=2611),
                                       RandomBinaryProjections('rbp', PROJECTIONBITS,rand_seed=261),
                                       RandomBinaryProjections('rbp', PROJECTIONBITS,rand_seed=26)])
-BATCH_SIZE = 1000
+
 
 
 class NodeLookup(object):
@@ -107,8 +107,13 @@ def nearest_fast(query_vector,index,files,n=12):
     return [files[int(k)] for v,k,d in ENGINE.neighbours(query_vector)[:n]]
 
 
-def get_batch():
-    path = DATA_PATH+"/*"
+def get_batch(path,batch_size = 1000):
+    """
+    Args:
+        path: directory containing images
+    Returns: Generator with dictionary  containing image_file_nameh : image_data, each with size =  BUCKET_SIZE
+    """
+    path = path+"/*"
     image_data = {}
     logging.info("starting with path {}".format(path))
     for i,fname in enumerate(glob.glob(path)):
@@ -117,26 +122,25 @@ def get_batch():
         except:
             logging.info("failed to load {}".format(fname))
             pass
-        if i % BATCH_SIZE == 0:
+        if i % batch_size == 0:
             logging.info("Loaded {}, with {} images".format(i,len(image_data)))
             yield image_data
             image_data = {}
     yield image_data
 
 
-def store_index(features,files,count):
-    tempdir = tempfile.mkdtemp()
-    feat_fname = "{}/{}.feats_pool3.npy".format(tempdir,count)
-    files_fname = "{}/{}.files".format(tempdir,count)
-    logging.info("storing in {}".format(tempdir))
+def store_index(features,files,count,index_dir,bucket_name=BUCKET_NAME,prefix=PREFIX):
+    feat_fname = "{}/{}.feats_pool3.npy".format(index_dir,count)
+    files_fname = "{}/{}.files".format(index_dir,count)
+    logging.info("storing in {}".format(index_dir))
     with open(feat_fname,'w') as feats:
         np.save(feats,np.array(features))
     with open(files_fname,'w') as filelist:
         filelist.write("\n".join(files))
     if AWS:
-        os.system('aws s3 mv {} s3://{}/{}/ --region "us-east-1"'.format(feat_fname,BUCKET_NAME,PREFIX))
-        os.system('aws s3 mv {} s3://{}/{}/ --region "us-east-1"'.format(files_fname,BUCKET_NAME,PREFIX))
-        logging.info("uploaded {} and {} to s3://{}/{}/ ".format(feat_fname,files_fname,BUCKET_NAME,PREFIX))
+        os.system('aws s3 mv {} s3://{}/{}_index/ --region "us-east-1"'.format(feat_fname,bucket_name,prefix))
+        os.system('aws s3 mv {} s3://{}/{}_index/ --region "us-east-1"'.format(files_fname,bucket_name,prefix))
+        logging.info("uploaded {} and {} to s3://{}/{}_index/ ".format(feat_fname,files_fname,bucket_name,prefix))
 
 def extract_features(image_data,sess):
     pool3 = sess.graph.get_tensor_by_name('pool_3:0')
