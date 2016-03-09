@@ -7,6 +7,7 @@ try:
     from settings import DEMO
 except ImportError:
     DEMO = None
+    pass
 from tensorflow.python.platform import gfile
 from nearpy import Engine
 from nearpy.hashes import RandomBinaryProjections

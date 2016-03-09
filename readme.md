@@ -55,6 +55,8 @@ tail -f logs/server.log
 ```
 
 ####Run demo with precomputed index  
+Note that following code will download about ~3Gb indexes from S3 and it will also download individual images while generating results for queries.
+This should not be a problem when running on AWS / correct region. It will take about 10 minutes to download, extract and load index in the memory. 
 ```
 cd VisualSearchServer
 git pull
