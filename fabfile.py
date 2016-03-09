@@ -81,7 +81,7 @@ def demo_fashion():
     # local('aws s3api get-object --bucket aub3visualsearch --key "fashion_index.tar.gz" --request-payer requester /mnt/fashion_index.tar.gz')
     # local('cd /mnt/;tar -zxvf fashion_index.tar.gz')
     local('echo "\nDEMO=\'fashion_images\'" >> settings.py')
-    local('echo "\nINDEX_PATH=\'/mnt/fashion_images/\'" >> settings.py')
+    local('echo "\nINDEX_PATH=\'/mnt/fashion_index/\'" >> settings.py')
     local('python server.py')
 
 
