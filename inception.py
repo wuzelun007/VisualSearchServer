@@ -81,7 +81,7 @@ def load_index():
     for fname in glob.glob(INDEX_PATH+"*.npy"):
         logging.info("Starting {}".format(fname))
         try:
-            index.append(np.load(fname))
+            index = np.concatenate([index,np.load(fname)])
         except:
             logging.error("Could not load {}".format(fname))
             pass
@@ -91,7 +91,6 @@ def load_index():
                 ENGINE.store_vector(index[-1][i,:],"{}".format(findex))
                 findex += 1
             logging.info("Loaded {}".format(fname))
-    index = np.concatenate(index)
     return index,files
 
 
