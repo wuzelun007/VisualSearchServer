@@ -2,7 +2,12 @@ import os,sys,logging,time
 from fabric.state import env
 from fabric.api import env,local,run,sudo,put,cd,lcd,puts,task,get,hide
 from settings import BUCKET_NAME,DATA_PATH,INDEX_PATH
-import inception
+try:
+    import inception
+except ImportError:
+    print "could not import main module limited to boostrap actions"
+    pass
+
 from settings import USER,private_key,HOST
 env.user = USER
 env.key_filename = private_key
