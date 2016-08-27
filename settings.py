@@ -1,6 +1,6 @@
 import sys
 USER = "ubuntu"
-HOST = "54.163.197.27"
+HOST = "54.164.8.85"
 AWS = sys.platform != 'darwin'
 private_key =  "~/.ssh/cs5356"
 CONFIG_PATH = __file__.split('settings.py')[0]

@@ -69,10 +69,10 @@ def load_network(png=False):
         if png:
             png_data = tf.placeholder(tf.string, shape=[])
             decoded_png = tf.image.decode_png(png_data, channels=3)
-            _ = tf.import_graph_def(graph_def, name='',input_map={'DecodeJpeg': decoded_png})
+            _ = tf.import_graph_def(graph_def, name='incept',input_map={'DecodeJpeg': decoded_png})
             return png_data
         else:
-            _ = tf.import_graph_def(graph_def, name='')
+            _ = tf.import_graph_def(graph_def, name='incept')
 
 
 def load_index():
@@ -159,7 +159,7 @@ def store_index(features,files,count,index_dir,bucket_name=BUCKET_NAME,prefix=PR
         logging.info("uploaded {} and {} to s3://{}/{}_index/ ".format(feat_fname,files_fname,bucket_name,prefix))
 
 def extract_features(image_data,sess):
-    pool3 = sess.graph.get_tensor_by_name('pool_3:0')
+    pool3 = sess.graph.get_tensor_by_name('incept/pool_3:0')
     features = []
     files = []
     for fname,data in image_data.iteritems():
