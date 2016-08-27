@@ -129,7 +129,7 @@ def get_batch(path,batch_size = 1000):
         path: directory containing images
     Returns: Generator with dictionary  containing image_file_nameh : image_data, each with size =  BUCKET_SIZE
     """
-    path = path+"/*"
+    path += "/*"
     image_data = {}
     logging.info("starting with path {}".format(path))
     for i,fname in enumerate(glob.glob(path)):
@@ -138,7 +138,7 @@ def get_batch(path,batch_size = 1000):
         except:
             logging.info("failed to load {}".format(fname))
             pass
-        if i % batch_size == 0:
+        if (i+1) % batch_size == 0:
             logging.info("Loaded {}, with {} images".format(i,len(image_data)))
             yield image_data
             image_data = {}

@@ -1,4 +1,4 @@
-import os,sys,logging,time
+import os,sys,logging,time,shutil
 from fabric.state import env
 from fabric.api import env,local,run,sudo,put,cd,lcd,puts,task,get,hide
 from settings import BUCKET_NAME,DATA_PATH,INDEX_PATH
@@ -140,3 +140,26 @@ def clear():
     local('rm logs/*.log &')
 
 
+@task
+def test():
+    inception.load_network()
+    count = 0
+    start = time.time()
+    test_images =  os.path.join(os.path.dirname(__file__),'tests/images')
+    test_index = os.path.join(os.path.dirname(__file__), 'tests/index')
+    try:
+        shutil.rmtree(test_index)
+    except:
+        pass
+    os.mkdir(test_index)
+    with inception.tf.Session() as sess:
+        for image_data in inception.get_batch(test_images,batch_size=2):
+            # batch size is set to 2 to distinguish between latency associated with first batch
+            if len(image_data):
+                print "Batch with {} images loaded in {} seconds".format(len(image_data),time.time()-start)
+                start = time.time()
+                count += 1
+                features,files = inception.extract_features(image_data,sess)
+                print "Batch with {} images processed in {} seconds".format(len(features),time.time()-start)
+                start = time.time()
+                inception.store_index(features,files,count,test_index)
