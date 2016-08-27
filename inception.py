@@ -164,7 +164,7 @@ def extract_features(image_data,sess):
     files = []
     for fname,data in image_data.iteritems():
         try:
-            pool3_features = sess.run(pool3,{'DecodeJpeg/contents:0': data})
+            pool3_features = sess.run(pool3,{'incept/DecodeJpeg/contents:0': data})
             features.append(np.squeeze(pool3_features))
             files.append(fname)
         except:
