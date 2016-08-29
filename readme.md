@@ -17,7 +17,9 @@ Nearest neighbor search can be performed in an approximate manner using nearpy (
 
 ####Running code on AWS
 
-The easiest way to use this project is to launch "ami-b80f0ad2" in AWS North Virginia (us-east-1) region.     
+The easiest way to use this project is to launch "ami-b80f0ad2"  in AWS North Virginia (us-east-1) region.
+**"ami-3eb0dd29" is new AMI with latest version of Tensorflow, derived from another public image which I found on AWS.
+It offers significant speedup due to improvements in Tensorflow, however I havent tested it thoroughly.**
 Make sure that you keep port 9000 open and use "g2.2xlarge" instance type.
 We strongly recommended using IAM roles, rather than manually entering credentials. 
 However you might need to configure AWS region "us-east-1" manually.
