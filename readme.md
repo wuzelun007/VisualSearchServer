@@ -78,7 +78,7 @@ You can then  use browser to access web UI on port 9000 of the instance DNS/IP.
 2. http://fabricjs.com/kitchensink
 3. https://github.com/karpathy/convnetjs
 4. https://www.tensorflow.org/ 
-5. http://nearpy.io/
+5. http://pixelogik.github.io/NearPy/
 
    
 License:    
